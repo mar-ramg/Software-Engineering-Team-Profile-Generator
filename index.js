@@ -12,3 +12,69 @@ const inquirer = require('inquirer');
 
 // team array
 const teamArray = [];
+
+// beginning of manager prompts
+const addManager = () => {
+    return inquirer.prompt ([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Who is the manager of this amazing team?',
+            validate: nameInput => {
+                if (nameInput){
+                    return true;
+                } else {
+                    console.log("Please enter the manager's name!");
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the manager's ID?",
+            validate: nameInput => {
+                if (isNaN(nameInput)){
+                    console.log("Please enter the manager's ID!");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "Enter the Manager's Email.",
+            validate: email => {
+                valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+                if (valid) {
+                    return true;
+                } else {
+                    console.log('Please enter an email!')
+                    return false;
+                }
+            } 
+        },
+        {
+            type: 'input',
+            name: 'officeNumber',
+            message: "Enter the Manager's Office Number",
+            validate: nameInput => {
+                if (isNaN(nameInput)) {
+                    console.log('Please enter an office number!')
+                    return false;
+                } else {
+                    return true;
+                }
+            } 
+        }
+    ])
+    .then(managerInput => {
+        const {name, id, email, officeNumber} = managerInput;
+        const manager = new Manager (name, id, email, officeNumber);
+
+        teamArray.push(manager);
+        console.log(manager);
+    })
+};
